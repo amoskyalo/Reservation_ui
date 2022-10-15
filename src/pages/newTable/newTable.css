@@ -1,0 +1,17 @@
+.newUser{
+  display: flex;
+  flex-direction: column;
+}
+ 
+
+.newUser input{
+  width: 100%;
+  margin: 0.5rem 0;
+  padding: 4px 2px;
+  outline: none;
+}
+
+.newUser button{
+  width: max-content;
+  margin-top: 1rem;
+}

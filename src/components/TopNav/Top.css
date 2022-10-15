@@ -1,0 +1,19 @@
+/* .top-nav{
+    border: 1px solid;
+} */
+
+.title{
+    font-weight: 700;
+    letter-spacing: 0.1rem;
+}
+
+.buttons{
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem;
+}
+
+.text{
+    font-weight: 700;
+    margin-top: 0.5rem;
+}

@@ -1,0 +1,12 @@
+.home{
+    margin: 0;
+}
+
+.homeWidgets{
+    display: flex;
+    margin: 20px;
+}
+
+.reserve{
+    overflow: auto;
+}
