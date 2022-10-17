@@ -1,56 +1,63 @@
 import "./newReservation.css";
 import Button from 'react-bootstrap/Button';
 import { useState } from "react";
+import axios from "axios";
 
 
 
-export default function NewProduct( { setNewReserve }) {
-  const [first_name, setFirstName] = useState("");
-  const [last_name, setLastName] = useState("");
-  const [mobile_number, setNumber] = useState("");
-  const [reservation_date, setDate] = useState("");
-  const [reservation_time, setTime] = useState ("");
-  const [people, setPeople] = useState(""); 
+export default function NewProduct() {
+  const [newData, setNewData] = useState({
+    firstname: "",
+    lastname: "",
+    mobileNo: "",
+    date: "",
+    time: "",
+    people: ""
+  }
+  );
 
-  const submit = (e)=>{
-    e.preventDefault();
+  const handleChange = (e) =>{
+    setNewData((initial)=>{
+      return {...initial, [e.target.name]: e.target.value}
+    });
+  };
 
-    setNewReserve({first_name, last_name, mobile_number, reservation_date,
-    reservation_time, people});
 
-    setFirstName("");
-    setLastName("");
-    setNumber("");
-    setDate("");
-    setTime("");
-    setPeople("");
+  const submit = async (e)=>{
+    try {
+      e.preventDefault();
+      await axios.post("https://silicareservation.herokuapp.com/api/reservation", newData)
+      window.location.replace("/");
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
     <div className="form">
       <label>Name
-        <input type="text" placeholder="First Name" value={first_name}
-        onChange={(e)=>setFirstName(e.target.value)}/>
+        <input type="text" name="firstname" placeholder="First Name"
+        onChange={(e)=>handleChange(e)}/>
       </label>
       <label>Name
-        <input type="text" placeholder="Last Name" value={last_name}
-        onChange={(e)=>setLastName(e.target.value)}/>
+        <input type="text" name="lastname" placeholder="Last Name"
+        onChange={(e)=>handleChange(e)}/>
       </label>
       <label>Mobile Number
-        <input type="number" placeholder="Mobile Number" value={mobile_number} 
-        onChange={(e)=>setNumber(e.target.value)}/>
+        <input type="number" name="mobileNo" placeholder="Mobile Number"
+        onChange={(e)=>handleChange(e)}/>
       </label>
       <label>Date
-        <input type="date" value={reservation_date} 
-        onChange={(e)=>setDate(e.target.value)}/>
+        <input type="date" name="date"
+        onChange={(e)=>handleChange(e)}/>
       </label>
       <label>Time
-        <input type="time" value={reservation_time} 
-        onChange={(e)=>setTime(e.target.value)}/>
+        <input type="time" name="time"
+        onChange={(e)=>handleChange(e)}/>
       </label>
       <label>Number of people
-        <input type="number"  value={people} 
-        onChange={(e)=>setPeople(e.target.value)}/>
+        <input type="number" name="people"
+        onChange={(e)=>handleChange(e)}/>
       </label>
       <Button variant="primary" type="submit" onClick={submit}>Submit</Button>
     </div>

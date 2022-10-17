@@ -1,8 +1,33 @@
 import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 
-function DarkExample( { reservation, deleteFunction } ) {
+function DarkExample() {
+  const [reservation, setReservation] = useState([]);
+  
+  //New Post
+  const getFunction = async() =>{
+    try {
+      const res = await axios.get("https://silicareservation.herokuapp.com/api/reservation")
+      setReservation(res.data)
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  useEffect(()=>{
+    getFunction()
+  },[]);
 
+  //Delete Data
+  const deleteFunction = async(id) =>{
+    try {
+      await axios.delete(`https://silicareservation.herokuapp.com/api/reservation/${id}`)
+      window.location.reload();
+    } catch (error) {
+      console.log(error);
+    }
+  }
   return (
     <Table striped bordered hover variant="dark">
       <thead>
@@ -13,7 +38,6 @@ function DarkExample( { reservation, deleteFunction } ) {
           <th>Mobile Number</th>
           <th>Time</th>
           <th>people</th>
-          <th>Status</th>
           <th>Edit </th>
           <th> Cancel</th>
           <th>Seat </th>
@@ -21,18 +45,17 @@ function DarkExample( { reservation, deleteFunction } ) {
       </thead>
       <tbody>
       { reservation.map((item) => (
-              <tr key={item.reservation_id}>
-                <td>{item.reservation_id}</td>
-                <td>{item.first_name}</td>
-                <td>{item.last_name}</td>
-                <td>{item.mobile_number}</td>
-                <td>{item.reservation_time}</td>
+              <tr key={item._id}>
+                <td>1</td>
+                <td>{item.firstname}</td>
+                <td>{item.lastname}</td>
+                <td>{item.mobileNo}</td>
+                <td>{item.time}</td>
                 <td>{item.people}</td>
-                <td>{item.status}</td>
                 <td><Button variant="primary" type="submit">
         Edit
       </Button></td>
-      <td><Button variant="primary" type="submit" onClick={()=>deleteFunction(item.reservation_id)}>
+      <td><Button variant="primary" type="submit" onClick={()=>deleteFunction(item._id)}>
         cancel
       </Button></td>
       <td><Button variant="primary" type="submit">
